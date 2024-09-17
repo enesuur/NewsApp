@@ -5,9 +5,9 @@ import { categoryColors } from "constants/Colors";
 import { TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import NewsArticle from "../types/News";
-import formatDate from "helpers/formatDate";
+import formatDate from "../helpers/formatDate";
 import { StyleSheet } from "react-native";
-import blurhash from "constants/hashes";
+import blurhash from "../constants/Hashes";
 
 const NewsCard: React.FC<NewsArticle> = ({
   url,

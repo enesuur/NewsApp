@@ -9,7 +9,7 @@ import formatDate from "helpers/formatDate";
 import { categoryColors } from "constants/Colors";
 import { useNavigation } from "expo-router";
 import { Image } from "expo-image";
-import blurhash from "constants/hashes";
+import blurhash from "../../constants/Hashes";
 
 export default function NewsDetailScreen() {
   const { id } = useLocalSearchParams();
