@@ -74,7 +74,6 @@ export default function ModalScreen() {
       });
     } else {
       setFilteredNews(filteredNews);
-      console.log(filteredNews);
       router.push("/");
     }
   };

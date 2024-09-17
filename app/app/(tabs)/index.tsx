@@ -3,7 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import NewsCard from "components/NewsCard";
 import NewsArticle from "types/News";
-import { ScrollView, YStack, H1, Button, XStack } from "tamagui";
+import { ScrollView, YStack, H1, Button, XStack, Spinner } from "tamagui";
 import { useNewsContext } from "context/NewsContext";
 import { FilterX } from "@tamagui/lucide-icons";
 import Pagination from "components/Pagination";
@@ -16,9 +16,11 @@ export default function NewsScreen() {
   const { setNews, filteredNews, setFilteredNews } = useNewsContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchNews = async () => {
+      setLoading(true);
       try {
         const newsCollectionRef = collection(db, "News");
         const newsSnapshot = await getDocs(newsCollectionRef);
@@ -38,9 +40,10 @@ export default function NewsScreen() {
 
         setNewsData(sortedNewsList);
         setNews(sortedNewsList);
-        setTotalPages(Math.ceil(sortedNewsList.length / PAGE_SIZE));
       } catch (error) {
         console.error("Error fetching news: ", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -49,12 +52,18 @@ export default function NewsScreen() {
 
   const removeFilters = () => {
     setFilteredNews([]);
+    setCurrentPage(1);
   };
 
   const newsToDisplay = filteredNews.length > 0 ? filteredNews : newsData;
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
   const paginatedNews = newsToDisplay.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(newsToDisplay.length / PAGE_SIZE));
+    setCurrentPage(1);
+  }, [newsToDisplay]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -87,45 +96,50 @@ export default function NewsScreen() {
           Headlines That Matter: Your Daily News Update
         </H1>
 
-        <YStack>
-          {filteredNews.length > 0 && (
-            <XStack alignItems="flex-start">
-              <Button
-                onPress={removeFilters}
-                marginBottom="$4"
-                icon={<FilterX />}
-                backgroundColor="red"
-                marginLeft="$2"
-                color="white"
-                pressStyle={{
-                  bg: "red",
-                  scale: 0.95,
-                  borderColor: "red",
-                }}
-              >
-                Remove Filters
-              </Button>
-            </XStack>
-          )}
+        {loading ? (
+          <YStack justifyContent="center" alignItems="center" height={400}>
+            <Spinner size="large" />
+          </YStack>
+        ) : (
+          <YStack>
+            {filteredNews.length > 0 && (
+              <XStack alignItems="flex-start">
+                <Button
+                  onPress={removeFilters}
+                  marginBottom="$4"
+                  icon={<FilterX />}
+                  backgroundColor="red"
+                  marginLeft="$2"
+                  color="white"
+                  pressStyle={{
+                    bg: "red",
+                    scale: 0.95,
+                    borderColor: "red",
+                  }}
+                >
+                  Remove Filters
+                </Button>
+              </XStack>
+            )}
 
-          {paginatedNews.map((newsItem) => (
-            <NewsCard
-              key={newsItem.id}
-              id={newsItem.id}
-              title={newsItem.title}
-              url={newsItem.url}
-              category={newsItem.category}
-              date={newsItem.date}
+            {paginatedNews.map((newsItem) => (
+              <NewsCard
+                key={newsItem.id}
+                id={newsItem.id}
+                title={newsItem.title}
+                url={newsItem.url}
+                category={newsItem.category}
+                date={newsItem.date}
+              />
+            ))}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onNextPage={handleNextPage}
+              onPreviousPage={handlePreviousPage}
             />
-          ))}
-        </YStack>
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onNextPage={handleNextPage}
-          onPreviousPage={handlePreviousPage}
-        />
+          </YStack>
+        )}
       </YStack>
     </ScrollView>
   );
