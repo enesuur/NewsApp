@@ -1,6 +1,6 @@
-import React from 'react';
-import { XStack, Button, Paragraph } from 'tamagui';
-import { ArrowLeft,ArrowRight } from '@tamagui/lucide-icons';
+import React from "react";
+import { XStack, Button, Paragraph } from "tamagui";
+import { ArrowLeft, ArrowRight } from "@tamagui/lucide-icons";
 
 interface PaginationProps {
   currentPage: number;
@@ -20,7 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <Button
         onPress={onPreviousPage}
         disabled={currentPage === 1}
-        backgroundColor={currentPage === 1 ? '#A9A9A9' : 'red'}
+        backgroundColor={currentPage === 1 ? "#A9A9A9" : "red"}
         color="white"
         disabledStyle={{ opacity: 0.5 }}
         onPressIn={() => {
@@ -30,23 +30,21 @@ const Pagination: React.FC<PaginationProps> = ({
         }}
         size="$3"
         marginRight="$4"
-        icon={<ArrowLeft/>}
-      >
-      </Button>
+        icon={<ArrowLeft />}
+      ></Button>
 
-      <Paragraph fontWeight="bold">{`${currentPage}/${totalPages}`}</Paragraph>
+      <Paragraph fontSize="$6" fontWeight="bold">{`${currentPage}/${totalPages}`}</Paragraph>
 
       <Button
         onPress={onNextPage}
         disabled={currentPage === totalPages}
-        backgroundColor={currentPage === totalPages ? '#A9A9A9' : 'red'}
+        backgroundColor={currentPage === totalPages ? "#A9A9A9" : "red"}
         color="white"
         disabledStyle={{ opacity: 0.5 }}
         size="$3"
         marginLeft="$4"
-        icon={<ArrowRight/>}
-      >
-      </Button>
+        icon={<ArrowRight />}
+      ></Button>
     </XStack>
   );
 };
