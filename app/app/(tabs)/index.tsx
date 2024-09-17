@@ -89,7 +89,6 @@ export default function NewsScreen() {
         gap={24}
         flexDirection="column"
         backgroundColor="$background"
-        borderRadius="$4"
         elevation={2}
       >
         <H1 alignSelf="center" marginVertical="$4">

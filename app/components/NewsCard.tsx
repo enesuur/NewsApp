@@ -27,7 +27,6 @@ const NewsCard: React.FC<NewsArticle> = ({
     <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
       <Card
         padding="$2"
-        borderRadius="$2"
         backgroundColor="#fff"
         shadowColor="rgba(0, 0, 0, 0.1)"
         shadowOffset={{ width: 0, height: 1 }}
