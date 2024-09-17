@@ -1,4 +1,4 @@
-import { ScrollView, Image } from "react-native";
+import { ScrollView } from "react-native";
 import { Text, YStack, XStack, H3, Paragraph, Spinner } from "tamagui";
 import { useEffect, useState } from "react";
 import { db } from "../../config/firebaseConfig";
@@ -7,7 +7,9 @@ import { useLocalSearchParams } from "expo-router";
 import NewsArticle from "types/News";
 import formatDate from "helpers/formatDate";
 import { categoryColors } from "constants/Colors";
-import { useNavigation } from 'expo-router';
+import { useNavigation } from "expo-router";
+import { Image } from "expo-image";
+import blurhash from "constants/hashes";
 
 export default function NewsDetailScreen() {
   const { id } = useLocalSearchParams();
@@ -15,7 +17,7 @@ export default function NewsDetailScreen() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigation = useNavigation();
-  navigation.setOptions({ title: "Details"});
+  navigation.setOptions({ title: "Details" });
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -50,7 +52,7 @@ export default function NewsDetailScreen() {
         <YStack
           justifyContent="center"
           alignItems="center"
-          style={{ height: '100%', marginTop: 20 }}
+          style={{ height: "100%", marginTop: 20 }}
         >
           <Spinner size="large" />
         </YStack>
@@ -59,9 +61,12 @@ export default function NewsDetailScreen() {
           {error}
         </Text>
       ) : postData ? (
-        <YStack space="$2">
+        <YStack gap="$2">
           <Image
             source={{ uri: postData.url }}
+            placeholder={{ blurhash }}
+            contentFit="cover"
+            transition={1000}
             style={{
               width: "100%",
               height: 256,
@@ -75,7 +80,11 @@ export default function NewsDetailScreen() {
             </H3>
 
             <XStack justifyContent="space-between" marginVertical="$2">
-              <Text fontSize="$4" color={categoryColors[postData.category] || "blue"} marginBottom="$1">
+              <Text
+                fontSize="$4"
+                color={categoryColors[postData.category] || "blue"}
+                marginBottom="$1"
+              >
                 {postData.category}
               </Text>
 
@@ -86,11 +95,15 @@ export default function NewsDetailScreen() {
               </XStack>
             </XStack>
 
-            <Paragraph fontSize={16} marginVertical="$4">{postData.description}</Paragraph>
+            <Paragraph fontSize={16} marginVertical="$4">
+              {postData.description}
+            </Paragraph>
           </YStack>
         </YStack>
       ) : (
-        <Text style={{ textAlign: "center", marginTop: 20 }}>No content available.</Text>
+        <Text style={{ textAlign: "center", marginTop: 20 }}>
+          No content available.
+        </Text>
       )}
     </ScrollView>
   );
