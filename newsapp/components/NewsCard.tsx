@@ -1,10 +1,13 @@
-import { Card, Image, YStack, XStack, Text, H4 } from "tamagui";
+import { Card, YStack, XStack, Text, H4 } from "tamagui";
+import { Image } from "expo-image";
 import { Calendar } from "@tamagui/lucide-icons";
-import NewsArticle from "../types/News";
 import { categoryColors } from "constants/Colors";
-import formatDate from "helpers/formatDate";
 import { TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import NewsArticle from "../types/News";
+import formatDate from "helpers/formatDate";
+import { StyleSheet } from "react-native";
+import blurhash from "constants/hashes";
 
 const NewsCard: React.FC<NewsArticle> = ({
   url,
@@ -35,9 +38,10 @@ const NewsCard: React.FC<NewsArticle> = ({
         <Image
           source={{ uri: url }}
           alt={title}
-          width="100%"
-          height={256}
-          marginBottom="$2"
+          style={imageStyles.image}
+          placeholder={{ blurhash }}
+          contentFit="cover"
+          transition={1000}
         />
 
         <YStack>
@@ -62,5 +66,14 @@ const NewsCard: React.FC<NewsArticle> = ({
     </TouchableOpacity>
   );
 };
+
+const imageStyles = StyleSheet.create({
+  image: {
+    width: "100%",
+    height: 256,
+    backgroundColor: "#0553",
+    marginBottom: 8,
+  },
+});
 
 export default NewsCard;
