@@ -66,6 +66,6 @@ When a user clicks on a news item on the homepage, they are redirected to a deta
 - **Tamagui**: For creating a sleek and responsive UI.
 - **Typescript**: As programming language.
 - 
-## Conclusion
+## Developer
+@enesuur
 
-This project is a user-friendly news portal with a responsive design, allowing users to quickly access the latest news. Features such as category and date filtering, a detailed news page, infinite scroll, and image caching provide a seamless and efficient user experience.
