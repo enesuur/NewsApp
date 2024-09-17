@@ -17,7 +17,10 @@ export default function NewsDetailScreen() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigation = useNavigation();
-  navigation.setOptions({ title: "Details" });
+
+  useEffect(() => {
+    navigation.setOptions({ title: "Details" });
+  }, [navigation]);
 
   useEffect(() => {
     const fetchNews = async () => {
