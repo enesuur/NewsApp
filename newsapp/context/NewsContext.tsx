@@ -1,31 +1,31 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-
-interface NewsArticle {
-  id:string;
-  title: string;
-  description?: string;
-  category: string;
-  date: number | string;
-  imageUrl: string;
-}
+import NewsArticle from "types/News";
 
 interface NewsContextType {
   news: NewsArticle[];
   setNews: (newArticles: NewsArticle[]) => void;
   getNews: () => NewsArticle[];
+  filteredNews: NewsArticle[];
+  setFilteredNews: (newArticles: NewsArticle[]) => void;
+  getFilteredNews: () => NewsArticle[];
 }
 
 const NewsContext = createContext<NewsContextType | undefined>(undefined);
 
 export const NewsProvider = ({ children }: { children: ReactNode }) => {
   const [news, setNews] = useState<NewsArticle[]>([]);
+  const [filteredNews, setFilteredNews] = useState<NewsArticle[]>([]);
 
   const getNews = () => {
     return news;
   };
 
+  const getFilteredNews = () => {
+    return filteredNews;
+  };
+
   return (
-    <NewsContext.Provider value={{ news, setNews, getNews }}>
+    <NewsContext.Provider value={{ news, setNews, getNews, filteredNews, setFilteredNews, getFilteredNews }}>
       {children}
     </NewsContext.Provider>
   );
@@ -38,6 +38,5 @@ export const useNewsContext = () => {
   }
   return context;
 };
-
 
 export default NewsContext;

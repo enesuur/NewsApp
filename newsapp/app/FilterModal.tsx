@@ -1,29 +1,22 @@
 import React, { useState } from "react";
-import {
-  Button,
-  View,
-  XStack,
-  H3,
-  useTheme,
-  YStack,
-  H4,
-  Paragraph,
-} from "tamagui";
+import { Button, View, XStack, H3, YStack, H4, Paragraph } from "tamagui";
 import { useNewsContext } from "../context/NewsContext";
 import { categoryColors } from "constants/Colors";
 import { Calendar, Check } from "@tamagui/lucide-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { useRouter } from "expo-router";
+import { useToastController } from "@tamagui/toast";
 
 const CATEGORIES = Object.keys(categoryColors);
 
 export default function ModalScreen() {
-  const theme = useTheme();
-  const { news } = useNewsContext();
-  console.log(news);
+  const { getNews, setFilteredNews, filteredNews } = useNewsContext();
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
+  const router = useRouter();
+  const toast = useToastController();
   const handleCategoryClick = (category: string) => {
     setSelectedCategory((prevCategories) => {
       if (prevCategories.includes(category)) {
@@ -38,6 +31,51 @@ export default function ModalScreen() {
     setShowPicker(false);
     if (date) {
       setSelectedDate(date);
+    }
+  };
+
+  const applyFilters = () => {
+    const newsData = getNews();
+
+    const hasCategories = selectedCategory.length > 0;
+    const hasDate = !!selectedDate;
+
+    let filteredNews = newsData;
+
+    if (hasCategories) {
+      filteredNews = filteredNews.filter((news) =>
+        selectedCategory.includes(news.category)
+      );
+    }
+
+    if (hasDate) {
+      const selectedTimestampStart = new Date(
+        selectedDate.setHours(0, 0, 0, 0)
+      ).getTime();
+      const selectedTimestampEnd = new Date(
+        selectedDate.setHours(23, 59, 59, 999)
+      ).getTime();
+
+      filteredNews = filteredNews.filter((news) => {
+        const newsDateObject = new Date(
+          news.date.seconds * 1000 + news.date.nanoseconds / 1000000
+        );
+        const newsTimestamp = newsDateObject.getTime();
+        return (
+          newsTimestamp >= selectedTimestampStart &&
+          newsTimestamp <= selectedTimestampEnd
+        );
+      });
+    }
+
+    if (filteredNews.length === 0) {
+      toast.show("No events", {
+        message: "Try another options.",
+      });
+    } else {
+      setFilteredNews(filteredNews);
+      console.log(filteredNews);
+      router.push("/");
     }
   };
 
@@ -72,6 +110,12 @@ export default function ModalScreen() {
           backgroundColor="white"
           borderColor="red"
           width="200px"
+          color="red"
+          pressStyle={{
+            bg: "white",
+            scale: 0.95,
+            borderColor: "red",
+          }}
         >
           Select Date
         </Button>
@@ -89,7 +133,17 @@ export default function ModalScreen() {
       </YStack>
 
       <YStack marginTop="auto">
-        <Button backgroundColor="red" color="white" iconAfter={<Check />}>
+        <Button
+          backgroundColor="red"
+          color="white"
+          iconAfter={<Check />}
+          onPress={applyFilters}
+          pressStyle={{
+            bg: "red",
+            scale: 0.95,
+            borderColor: "red",
+          }}
+        >
           Apply
         </Button>
       </YStack>

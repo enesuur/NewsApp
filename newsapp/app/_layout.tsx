@@ -12,7 +12,6 @@ import { SplashScreen, Stack } from "expo-router";
 import { Provider } from "./Provider";
 import { useTheme } from "tamagui";
 import { NewsProvider } from "../context/NewsContext";
-
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
