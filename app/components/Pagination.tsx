@@ -33,7 +33,10 @@ const Pagination: React.FC<PaginationProps> = ({
         icon={<ArrowLeft />}
       ></Button>
 
-      <Paragraph fontSize="$6" fontWeight="bold">{`${currentPage}/${totalPages}`}</Paragraph>
+      <Paragraph
+        fontSize="$6"
+        fontWeight="bold"
+      >{`${currentPage}/${totalPages}`}</Paragraph>
 
       <Button
         onPress={onNextPage}
