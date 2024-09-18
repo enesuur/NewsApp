@@ -74,7 +74,7 @@ function RootLayoutNav() {
         <Stack.Screen
           name="FilterModal"
           options={{
-            title: "Filter Events",
+            title: "Filter News",
             presentation: "modal",
             animation: "slide_from_right",
             gestureEnabled: true,
