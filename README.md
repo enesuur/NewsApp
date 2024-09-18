@@ -6,9 +6,9 @@ This project is a news portal integrated with Firebase Firestore, allowing users
 
 The project features a responsive user interface built with **Tamagui**, ensuring compatibility across a wide range of devices, from mobile to desktop.
 
-| ![Image 1](https://i.hizliresim.com/lornkct.png) | ![Image 2](https://i.hizliresim.com/i1m7yrl.png) | ![Image 3](https://i.hizliresim.com/4rr9lxz.png) |
+| ![Image 1](https://i.hizliresim.com/lornkct.png) | ![Image 2](https://hizliresim.com/i1m7yrl.png) | ![Image 3](https://hizliresim.com/4rr9lxz.png) |
 |:---:|:---:|:---:|
-| [Link](https://hizliresim.com/lornkct) | [Link](https://hizliresim.com/4uq4e3v) | [Link](https://hizliresim.com/r9ie5o6) |
+| [Link](https://hizliresim.com/lornkct) | [Link](https://hizliresim.com/i1m7yrl) | [Link](https://hizliresim.com/4rr9lxz) |
 | ![Image 4](https://i.hizliresim.com/2i3tw3e.png) | ![Image 5](https://i.hizliresim.com/9sdn7et.png) | ![Image 6](https://i.hizliresim.com/cfo1nx9.png) |
 | [Link](https://hizliresim.com/2i3tw3e) | [Link](https://hizliresim.com/9sdn7et) | [Link](https://hizliresim.com/cfo1nx9) |
 
