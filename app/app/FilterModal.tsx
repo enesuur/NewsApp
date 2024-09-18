@@ -80,7 +80,7 @@ export default function ModalScreen() {
 
   return (
     <View flex={1} padding="$4">
-      <H3 marginVertical="$4">Filter the events by category and date.</H3>
+      <H3 marginVertical="$4">Filter the news by category and date.</H3>
       <XStack flexWrap="wrap" space="$4" rowGap="$2">
         {CATEGORIES.map((category) => (
           <Button
