@@ -69,7 +69,7 @@ export default function ModalScreen() {
     }
 
     if (filteredNews.length === 0) {
-      toast.show("No events", {
+      toast.show("No news to show.", {
         message: "Try another options.",
       });
     } else {
